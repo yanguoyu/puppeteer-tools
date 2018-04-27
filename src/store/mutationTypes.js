@@ -5,5 +5,8 @@ export default {
   hasError: 'hasError',
   clearError: 'clearError',
   // home
-  getUserInfo: 'getUserInfo'
+  getUserInfo: 'getUserInfo',
+  // newWork
+  getUrlPage: 'getUrlPage',
+  shotUrl: 'shotUrl'
 }

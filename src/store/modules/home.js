@@ -14,7 +14,7 @@ export default {
     increment (context) {
       untils.createApi.get({
         config: {
-          url: 'http://127.0.0.1:7001/getUserInfo'
+          url: '/getUserInfo'
         },
         success: (res) => {
           context.commit(mutationTypes.getUserInfo, res)

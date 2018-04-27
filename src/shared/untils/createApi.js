@@ -6,7 +6,8 @@ export function createAxois (httpMethod) {
   return (params, context) => {
     const config = {
       method: httpMethod,
-      ...params.config
+      ...params.config,
+      baseURL: 'http://127.0.0.1:7001/'
     }
     if (context) {
       context.commit(mutationTypes.addLoading)
@@ -16,9 +17,10 @@ export function createAxois (httpMethod) {
         .then(res => {
           if (res.data.code === 30200) {
             window.location.href = res.data.redirectUrl
+            return
           }
           context.commit(mutationTypes.subLoading)
-          params.success && params.success(res.data)
+          params.success && params.success(res.data.result)
         })
         .catch(err => {
           context.commit(mutationTypes.hasError)

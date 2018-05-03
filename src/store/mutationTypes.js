@@ -6,6 +6,7 @@ export default {
   clearError: 'clearError',
   // home
   getUserInfo: 'getUserInfo',
+  getAllWorkInfo: 'getAllWorkInfo',
   // newWork
   getUrlPage: 'getUrlPage',
   shotUrl: 'shotUrl'

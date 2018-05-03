@@ -30,40 +30,18 @@ export default {
         }
       }, context)
     },
-    [actionTypes.saveWork] (context) {
+    [actionTypes.saveWork] (context, workInfo) {
       untils.createApi.post({
         config: {
           url: '/saveWork',
           data: {
-            name: 'firTest',
-            url: 'https://github.com/login',
-            operatorItems: [
-              {
-                selector: {
-                  select: '.auth-form-body>input',
-                  sameSelectIndex: 0
-                },
-                eventType: 'Input',
-                value: '841185308@qq.com'
-              },
-              {
-                selector: {
-                  select: '.auth-form-body>input',
-                  sameSelectIndex: 1
-                },
-                eventType: 'Input',
-                value: '149162ygy'
-              },
-              {
-                selector: {
-                  select: '.auth-form-body>input',
-                  sameSelectIndex: 2
-                },
-                eventType: 'Click',
-                waitForNavigation: true
-              }
-            ]
+            name: workInfo.name,
+            url: workInfo.url,
+            desc: workInfo.desc
           }
+        },
+        success: () => {
+          context.dispatch(actionTypes.getAllWorkInfo)
         }
       }, context)
     },

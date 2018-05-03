@@ -27,14 +27,7 @@ export function createAxois (httpMethod) {
           params.failed && params.failed(err)
         })
     } else {
-      axios
-        .request(config)
-        .then(res => {
-          params.success && params.success(res)
-        })
-        .catch(err => {
-          params.failed && params.failed(err)
-        })
+      return axios.request(config)
     }
   }
 }

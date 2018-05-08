@@ -13,8 +13,9 @@
           <el-input v-model="taskInfo.name" auto-complete="off" placeholder="任务名称"/>
         </el-form-item>
         <el-form-item label="前置操作" prop="preOp">
-          <el-button @click="addPreOp">新增前置操作</el-button>
-          <el-tag :key="tag.objectId" v-for="(tag, index) in taskInfo.preOp" closable :disable-transitions="false" @close="removePre(index)">
+          <el-button @click="addPreOp" size="small">新增前置操作</el-button>
+          <el-tag :key="index" class="preOp"
+            v-for="(tag, index) in taskInfo.preOp" closable :disable-transitions="false" @close="removePre(index)">
             {{tag.name}}
           </el-tag>
         </el-form-item>
@@ -26,12 +27,8 @@
             v-model="taskInfo.operatorItems[index]"/>
         </el-form-item>
         <el-form-item
-          label="期望类型" prop="opType">
-          <el-select v-model="taskInfo.expectModel.opType" placeholder="期望类型">
-            <el-option label="属性" value="Attribute"/>
-            <el-option label="内容" value="Content"/>
-            <el-option label="截图" value="PageShot"/>
-          </el-select>
+          label="期望" prop="opType">
+          <expect v-model="taskInfo.expectModel"/>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -56,6 +53,7 @@
 import { mapActions } from 'vuex'
 import actionTypes from '../store/actionTypes'
 import OperatorModel from './OperatorModel'
+import Expect from './Expect'
 import untils from '../shared/untils/index'
 
 export default {
@@ -64,7 +62,8 @@ export default {
     dialogVisible: Boolean
   },
   components: {
-    OperatorModel: OperatorModel
+    OperatorModel: OperatorModel,
+    Expect: Expect
   },
   mounted: function () {
     this.workId = this.$route.params.workId
@@ -85,7 +84,9 @@ export default {
       this.taskInfo = {
         operatorItems: [{}],
         expectModel: {
-          opType: 'PageShot'
+          opType: 'PageShot',
+          useFirst: true,
+          onlyGet: true
         },
         preOp: []
       }
@@ -103,10 +104,10 @@ export default {
       })
     },
     removePre: function (index) {
-      this.taskInfo.preOp.splice(index)
+      this.taskInfo.preOp.splice(index, 1)
     },
     chooseOp: function (choosedOp) {
-      console.log(choosedOp)
+      this.visiblePre = false
       this.taskInfo.preOp.push(choosedOp)
     },
     addPreOp: function () {
@@ -130,7 +131,9 @@ export default {
       taskInfo: {
         operatorItems: [{}],
         expectModel: {
-          opType: 'PageShot'
+          opType: 'PageShot',
+          useFirst: true,
+          onlyGet: true
         },
         preOp: []
       },
@@ -145,5 +148,8 @@ export default {
 <style>
 .operator-item {
   margin-bottom: 10px;
+}
+.preOp {
+  margin-right: 10px;
 }
 </style>

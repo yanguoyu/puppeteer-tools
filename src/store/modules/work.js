@@ -72,8 +72,8 @@ export default {
       }
       opItem.push(...taskInfo.operatorItems.map(value => ({
         selector: {
-          select: value.selector,
-          sameSelectIndex: value.selectIndex
+          select: value.select,
+          sameSelectIndex: value.sameSelectIndex
         },
         eventType: value.eventType,
         value: value.value,
@@ -85,7 +85,13 @@ export default {
           data: {
             name: taskInfo.name,
             workId,
-            expectModel: taskInfo.expectModel,
+            expectModel: {
+              expectSelectKey: {
+                select: taskInfo.expectModel.select,
+                sameSelectIndex: taskInfo.expectModel.sameSelectIndex
+              },
+              ...taskInfo.expectModel
+            },
             operatorItems: opItem
           }
         },

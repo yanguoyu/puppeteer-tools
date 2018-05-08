@@ -17,8 +17,8 @@ export default {
             name: operator.name,
             items: operator.items.map(value => ({
               selector: {
-                select: value.selector,
-                sameSelectIndex: value.selectIndex
+                select: value.select,
+                sameSelectIndex: value.sameSelectIndex
               },
               eventType: value.eventType,
               value: value.value,

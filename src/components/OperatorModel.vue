@@ -1,10 +1,10 @@
 <template>
   <el-row>
     <el-col :span="8">
-      <el-input :value="value.selector" placeholder="请输入选择元素" v-on:input="changeValues($event,'selector')"/>
+      <el-input :value="value.select" placeholder="请输入选择元素" v-on:input="changeValues($event,'select')"/>
     </el-col>
     <el-col :span="8" :offset="1">
-      <el-input :value="value.selectIndex" placeholder="请输入选择元素索引" v-on:input="changeValues($event,'selectIndex')"/>
+      <el-input :value="value.sameSelectIndex" placeholder="请输入选择元素索引" v-on:input="changeValues($event,'sameSelectIndex')"/>
     </el-col>
     <el-col :span="6" :offset="1">
       <el-button v-if="isFirst" @click="$emit('addItem')">新增操作</el-button>
@@ -36,8 +36,8 @@ export default {
   methods: {
     changeValues: function (value, name) {
       const newValue = {
-        selector: this.value.selector,
-        selectIndex: this.value.selectIndex,
+        select: this.value.selector,
+        sameSelectIndex: this.value.sameSelectIndex,
         eventType: this.value.eventType,
         value: this.value.value,
         waitForNavigation: this.value.waitForNavigation,
@@ -48,8 +48,8 @@ export default {
   },
   props: {
     value: {
-      selector: String,
-      selectIndex: Number,
+      select: String,
+      sameSelectIndex: Number,
       eventType: String,
       value: String,
       waitForNavigation: Boolean

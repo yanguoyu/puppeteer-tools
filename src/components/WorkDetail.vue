@@ -21,8 +21,8 @@
     </el-form>
     <el-table :data="allTaskInfo" :row-class-name="tableRowClassName" class="task-tables">
       <el-table-column prop="name" label="名称"/>
-      <el-table-column prop="createdAt" label="创建时间"/>
-      <el-table-column prop="updatedAt" label="最后更新时间"/>
+      <el-table-column prop="createdAt" label="创建时间" :formatter="formatTime"/>
+      <el-table-column prop="updatedAt" label="最后更新时间" :formatter="formatTime"/>
       <el-table-column prop="lastStatus" label="状态">
         <template slot-scope="scope">
           <span>{{ scope.row.lastStatus===true?'成功': scope.row.lastStatus===false ? "执行失败":"未执行"}}</span>
@@ -39,9 +39,9 @@
     <el-dialog
       title="任务执行实例"
       :visible.sync="taskInstanceVisiable"
-      width="800">
+      width="60%">
         <el-table :data="taskInsInfos" :row-class-name="tableRowInsClassName" class="task-tables">
-            <el-table-column prop="updatedAt" label="执行时间"/>
+            <el-table-column prop="updatedAt" label="执行时间" :formatter="formatTime"/>
             <el-table-column prop="status" label="状态">
               <template slot-scope="scope">
                 <span>{{ scope.row.status===true?'成功': "失败"}}</span>
@@ -84,6 +84,7 @@ import actionTypes from '../store/actionTypes'
 import NewTask from './NewTask'
 import untils from '../shared/untils/index'
 import OperatorModel from './OperatorModel'
+import moment from 'moment'
 
 export default {
   name: 'NewWork',
@@ -149,6 +150,9 @@ export default {
         return 'success-row'
       }
       return 'failed-row'
+    },
+    formatTime (row, column, cellValue) {
+      return moment(cellValue).format('YYYY-MM-DD hh:mm:ss')
     },
     ...mapActions([
       actionTypes.getUrlPageAc,

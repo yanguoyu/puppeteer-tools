@@ -1,21 +1,29 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import MenuTitle from '@/components/MenuTitle'
 import HomePage from '@/components/HomePage'
-import NewWork from '@/components/NewWork'
+import WorkDetail from '@/components/WorkDetail'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'HomePage',
-      component: HomePage
-    },
-    {
-      path: '/newWork',
-      name: 'NewWork',
-      component: NewWork
+      path: '',
+      name: 'MenuTitle',
+      component: MenuTitle,
+      children: [
+        {
+          path: 'allWork',
+          name: 'HomePage',
+          component: HomePage
+        },
+        {
+          path: '/workDetail/:workId',
+          name: 'WorkDetail',
+          component: WorkDetail
+        }
+      ]
     }
   ]
 })

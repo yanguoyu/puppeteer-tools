@@ -1,10 +1,15 @@
 export default {
   // newWork
   getUrlPageAc: 'getUrlPageAc',
-  saveWork: 'saveWork',
-  excuteWork: 'excuteWork',
-  // home
+  excuteTask: 'excuteTask',
   getTaskInfo: 'getTaskInfo',
+  getAllTask: 'getAllTask',
+  saveTask: 'saveTask',
+  // home
+  saveWork: 'saveWork',
+  getUserInfo: 'getUserInfo',
   getAllWorkInfo: 'getAllWorkInfo',
-  logOut: 'logOut'
+  logOut: 'logOut',
+  // op
+  saveOperator: 'saveOperator'
 }

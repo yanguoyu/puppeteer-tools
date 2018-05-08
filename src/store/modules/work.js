@@ -5,7 +5,8 @@ import actionTypes from '../actionTypes'
 export default {
   state: {
     urlInfo: [],
-    shotUrl: ''
+    shotUrl: '',
+    allTaskInfo: []
   },
   mutations: {
     [mutationTypes.getUrlPage] (state, urlInfo) {
@@ -13,6 +14,9 @@ export default {
     },
     [mutationTypes.shotUrl] (state, shotUrl) {
       state.shotUrl = shotUrl
+    },
+    [mutationTypes.getAllTask] (state, allTaskInfo) {
+      state.allTaskInfo = allTaskInfo
     }
   },
   actions: {
@@ -30,14 +34,59 @@ export default {
         }
       }, context)
     },
-    [actionTypes.saveWork] (context, workInfo) {
+    [actionTypes.excuteTask] (context, taskId) {
+      untils.createApi.get({
+        config: {
+          url: '/excuteTask',
+          params: {
+            taskId
+          }
+        },
+        success: (res) => {
+          context.dispatch(actionTypes.getAllWorkInfo)
+        }
+      }, context)
+    },
+    [actionTypes.getAllTask] (context, workId) {
+      untils.createApi.get({
+        config: {
+          url: '/getAllTask',
+          params: {
+            workId
+          }
+        },
+        success: (res) => {
+          context.commit(mutationTypes.getAllTask, res)
+        }
+      }, context)
+    },
+    [actionTypes.saveTask] (context, {taskInfo, workId}) {
+      var opItem = []
+      for (let i = 0; i < taskInfo.preOp.length; ++i) {
+        opItem.push(...taskInfo.preOp[i].items.map(value => ({
+          selector: value.selector,
+          eventType: value.eventType,
+          value: value.value,
+          waitForNavigation: value.waitForNavigation
+        })))
+      }
+      opItem.push(...taskInfo.operatorItems.map(value => ({
+        selector: {
+          select: value.selector,
+          sameSelectIndex: value.selectIndex
+        },
+        eventType: value.eventType,
+        value: value.value,
+        waitForNavigation: value.waitForNavigation
+      })))
       untils.createApi.post({
         config: {
-          url: '/saveWork',
+          url: '/saveTask',
           data: {
-            name: workInfo.name,
-            url: workInfo.url,
-            desc: workInfo.desc
+            name: taskInfo.name,
+            workId,
+            expectModel: taskInfo.expectModel,
+            operatorItems: opItem
           }
         },
         success: () => {
@@ -45,16 +94,16 @@ export default {
         }
       }, context)
     },
-    [actionTypes.excuteWork] (context, { workId }) {
+    [actionTypes.getTaskInfo] (context) {
       untils.createApi.get({
         config: {
-          url: '/shotEle',
+          url: '/getTaskInfo',
           params: {
-            workId
+            taskId: '5ae6dc3eee920a00431b4449'
           }
         },
         success: (res) => {
-          context.commit(mutationTypes.shotUrl, res)
+          console.log(res)
         }
       }, context)
     }

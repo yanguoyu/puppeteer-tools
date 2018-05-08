@@ -14,4 +14,8 @@ export default {
 #app {
   margin: 0;
 }
+
+#app a {
+  text-decoration: none;
+}
 </style>

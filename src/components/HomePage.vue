@@ -1,19 +1,5 @@
 <template>
-  <div class="hello">
-    <el-menu
-      mode="horizontal">
-      <el-menu-item index="1">首页</el-menu-item>
-      <el-submenu index="2">
-        <template slot="title">工程</template>
-        <el-menu-item index="2-0">所有工程</el-menu-item>
-        <el-menu-item index="2-1">创建新工程</el-menu-item>
-      </el-submenu>
-      <el-submenu index="3" class="userInfo">
-        <template slot="title">{{userInfo.name}}</template>
-        <el-menu-item index="3-0">查看个人信息</el-menu-item>
-        <el-menu-item v-on:click="logOut" index="3-1">登出</el-menu-item>
-      </el-submenu >
-    </el-menu>
+  <div>
     <el-row>
       <el-col  class="workInfoItems" :span="6"
         :key="index" v-for="(workinfo, index) in allWorkInfo" >
@@ -85,6 +71,7 @@ export default {
       })
     },
     ...mapActions([
+      actionTypes.getUserInfo,
       actionTypes.getTaskInfo,
       actionTypes.logOut,
       actionTypes.getAllWorkInfo,
@@ -95,7 +82,7 @@ export default {
     this[actionTypes.getAllWorkInfo]()
   },
   created: function () {
-    this.$store.dispatch('increment')
+    this.getUserInfo()
   },
   data () {
     return {

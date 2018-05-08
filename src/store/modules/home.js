@@ -16,7 +16,7 @@ export default {
     }
   },
   actions: {
-    increment (context) {
+    [actionTypes.getUserInfo] (context) {
       untils.createApi.get({
         config: {
           url: '/getUserInfo'
@@ -26,16 +26,18 @@ export default {
         }
       }, context)
     },
-    [actionTypes.getTaskInfo] (context) {
-      untils.createApi.get({
+    [actionTypes.saveWork] (context, workInfo) {
+      untils.createApi.post({
         config: {
-          url: '/getTaskInfo',
-          params: {
-            taskId: '5ae6dc3eee920a00431b4449'
+          url: '/saveWork',
+          data: {
+            name: workInfo.name,
+            url: workInfo.url,
+            desc: workInfo.desc
           }
         },
-        success: (res) => {
-          console.log(res)
+        success: () => {
+          context.dispatch(actionTypes.getAllWorkInfo)
         }
       }, context)
     },

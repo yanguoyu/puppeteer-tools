@@ -9,5 +9,6 @@ export default {
   getAllWorkInfo: 'getAllWorkInfo',
   // newWork
   getUrlPage: 'getUrlPage',
-  shotUrl: 'shotUrl'
+  shotUrl: 'shotUrl',
+  getAllTask: 'getAllTask'
 }

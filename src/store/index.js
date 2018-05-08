@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import comm from './modules/comm'
 import home from './modules/home'
 import work from './modules/work'
+import operator from './modules/operator'
 
 Vue.use(Vuex)
 
@@ -12,7 +13,8 @@ export default new Vuex.Store({
   modules: {
     comm,
     home,
-    work
+    work,
+    operator
   },
   strict: debug
 })

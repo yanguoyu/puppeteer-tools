@@ -15,7 +15,7 @@
       title="创建工程"
       :visible.sync="dialogVisible"
       width="800">
-      <el-form :model="newWork" status-icon ref="newWorkForm" label-width="100px">
+      <el-form :model="newWork" ref="newWorkForm" label-width="100px">
         <el-form-item :rules="[
               { required: true, whitespace: true, message: '工程名称不能为空'},
               { pattern: '^[^\\s]{1,10}$', message: '工程名称不超过10位'}
@@ -30,6 +30,27 @@
           label="网站" prop="url">
           <el-input v-model="newWork.url" auto-complete="off"></el-input>
         </el-form-item>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item :rules="[
+                  { required: true , message: '请输入定时间隔'},
+                  { type: 'integer',  message: '只能为整数'},
+                  { type: 'number', min: 1,  max: 60, message: '取值范围为1-60'}
+              ]"
+              label="定时执行" prop="cycleTime">
+              <el-input v-model.number="newWork.cycleTime" auto-complete="off" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item prop="cycleTimeType">
+              <el-select v-model="newWork.cycleTimeType" placeholder="定时时间类型">
+                <el-option label="分钟" value="Minute"></el-option>
+                <el-option label="小时" value="Hour"></el-option>
+                <el-option label="天" value="Day"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item :rules="[
               { min: 0, max: 30, message: '描述不能超过30个字符'}
           ]"
@@ -62,7 +83,10 @@ export default {
         if (valid) {
           this[actionTypes.saveWork](this.newWork)
           this.dialogVisible = false
-          this.newWork = {}
+          this.newWork = {
+            cycleTime: 1,
+            cycleTimeType: 'Hour'
+          }
           this.$refs.newWorkForm.resetFields()
         } else {
           console.log('error submit!!')
@@ -86,7 +110,9 @@ export default {
       newWork: {
         name: null,
         url: null,
-        desc: null
+        desc: null,
+        cycleTime: 1,
+        cycleTimeType: 'Hour'
       }
     }
   },

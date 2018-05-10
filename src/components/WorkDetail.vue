@@ -57,7 +57,7 @@
       title="新增常用操作"
       :visible.sync="opDialogVisible"
       width="800">
-      <el-form :model="operatorItems" status-icon ref="operatorItems" label-width="100px">
+      <el-form :model="operatorItems" ref="operatorItems" label-width="100px">
         <el-form-item :rules="[
               { required: true, whitespace: true, message: '常用操作名称不能为空'},
               { pattern: '^[^\\s]{1,10}$', message: '常用操作名称不超过10位'}

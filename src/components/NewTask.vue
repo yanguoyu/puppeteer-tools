@@ -4,7 +4,7 @@
       title="创建任务"
       :visible.sync="displayStatus"
       >
-      <el-form :model="taskInfo" status-icon ref="taskInfo" label-width="100px">
+      <el-form :model="taskInfo" ref="taskInfo" label-width="100px">
         <el-form-item :rules="[
               { required: true, whitespace: true, message: '任务名称不能为空'},
               { pattern: '^[^\\s]{1,10}$', message: '任务名称不超过10位'}

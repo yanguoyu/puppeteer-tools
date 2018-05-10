@@ -33,7 +33,9 @@ export default {
           data: {
             name: workInfo.name,
             url: workInfo.url,
-            desc: workInfo.desc
+            desc: workInfo.desc,
+            cycleTime: workInfo.cycleTime,
+            cycleTimeType: workInfo.cycleTimeType
           }
         },
         success: () => {

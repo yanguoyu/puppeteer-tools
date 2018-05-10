@@ -36,7 +36,7 @@ export default {
   methods: {
     changeValues: function (value, name) {
       const newValue = {
-        select: this.value.selector,
+        select: this.value.select,
         sameSelectIndex: this.value.sameSelectIndex,
         eventType: this.value.eventType,
         value: this.value.value,

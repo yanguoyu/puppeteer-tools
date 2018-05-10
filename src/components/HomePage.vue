@@ -71,7 +71,6 @@ export default {
       })
     },
     ...mapActions([
-      actionTypes.getUserInfo,
       actionTypes.getTaskInfo,
       actionTypes.logOut,
       actionTypes.getAllWorkInfo,
@@ -80,9 +79,6 @@ export default {
   },
   beforeMount: function () {
     this[actionTypes.getAllWorkInfo]()
-  },
-  created: function () {
-    this.getUserInfo()
   },
   data () {
     return {

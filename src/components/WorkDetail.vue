@@ -25,17 +25,20 @@
       <el-table-column prop="updatedAt" label="最后更新时间" :formatter="formatTime"/>
       <el-table-column prop="lastStatus" label="状态">
         <template slot-scope="scope">
-          <span>{{ scope.row.lastStatus===true?'成功': scope.row.lastStatus===false ? "执行失败":"未执行"}}</span>
+          <span>{{ getStatusText(scope.row.lastStatus) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="text" @click="viewTaskInstance(scope.row.objectId)">查看执行实例</el-button>
-          <el-button type="text" @click="excuteTask(scope.row.objectId)">手动执行</el-button>
+          <el-button type="text" :disabled="scope.row.lastStatus === 'pending'"
+            @click="excuteTask({index: scope.$index, workId: $route.params.workId})">
+            {{ scope.row.lastStatus === 'pending' ?'执行中': '手动执行' }}
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
-    <newTask v-bind:dialogVisible.sync="dialogVisible"/>
+    <newTask v-bind:dialogVisible.sync="dialogVisible" />
     <el-dialog
       title="任务执行实例"
       :visible.sync="taskInstanceVisiable"
@@ -116,12 +119,12 @@ export default {
       this[actionTypes.getUrlPageAc]({pageUrl: this.pageUrl, selector: this.selector})
     },
     saveOperatorClick: function () {
+      this.opDialogVisible = false
+      this[actionTypes.saveOperator]({operator: this.operatorItems, workId: this.$route.params.workId})
       this.operatorItems = {
         name: null,
         items: [{}]
       }
-      this.opDialogVisible = false
-      this[actionTypes.saveOperator](this.operatorItems)
     },
     viewTaskInstance: function (taskId) {
       this.taskInstanceVisiable = true
@@ -142,8 +145,20 @@ export default {
         return 'success-row'
       } else if (row.lastStatus === false) {
         return 'failed-row'
+      } else if (row.lastStatus === 'pending') {
+        return 'pending-row'
       }
       return 'no-excute-row'
+    },
+    getStatusText (status) {
+      if (status === true) {
+        return '成功'
+      } else if (status === false) {
+        return '失败'
+      } else if (status === 'pending') {
+        return '执行中'
+      }
+      return '未执行'
     },
     tableRowInsClassName ({row}) {
       if (row.status === true) {
@@ -192,6 +207,10 @@ export default {
 
 .task-tables .success-row {
   color: #67C23A;
+}
+
+.task-tables .pending-row {
+  color: #40a9ff;
 }
 
 </style>

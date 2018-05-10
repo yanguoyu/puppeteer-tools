@@ -9,12 +9,13 @@ export default {
 
   },
   actions: {
-    [actionTypes.saveOperator] (context, operator) {
+    [actionTypes.saveOperator] (context, { operator, workId }) {
       untils.createApi.post({
         config: {
           url: '/saveOperatorItems',
           data: {
             name: operator.name,
+            workId,
             items: operator.items.map(value => ({
               selector: {
                 select: value.select,

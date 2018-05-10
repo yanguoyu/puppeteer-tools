@@ -114,7 +114,10 @@ export default {
       this.visiblePre = true
       untils.createApi.get({
         config: {
-          url: '/getOperatorItems'
+          url: '/getOperatorItems',
+          params: {
+            workId: this.$route.params.workId
+          }
         },
         success: (res) => {
           this.allComOp = res

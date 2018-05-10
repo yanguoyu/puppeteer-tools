@@ -33,7 +33,7 @@ export default {
     ])
   },
   created: function () {
-    this.getUserInfo()
+    this[actionTypes.getUserInfo]()
   },
   computed: {
     ...mapState({

@@ -1,6 +1,7 @@
 import untils from '../../shared/untils/index'
 import mutationTypes from '../mutationTypes'
 import actionTypes from '../actionTypes'
+import Vue from 'vue'
 
 export default {
   state: {
@@ -17,6 +18,9 @@ export default {
     },
     [mutationTypes.getAllTask] (state, allTaskInfo) {
       state.allTaskInfo = allTaskInfo
+    },
+    [mutationTypes.updateTask] (state, { index, task }) {
+      Vue.set(state.allTaskInfo, index, task)
     }
   },
   actions: {
@@ -34,16 +38,18 @@ export default {
         }
       }, context)
     },
-    [actionTypes.excuteTask] (context, taskId) {
+    [actionTypes.excuteTask] (context, {taskId, index, workId}) {
+      const curTask = context.state.allTaskInfo[index]
+      context.commit(mutationTypes.updateTask, {index, task: {...curTask, lastStatus: 'pending'}})
       untils.createApi.get({
         config: {
           url: '/excuteTask',
           params: {
-            taskId
+            taskId: curTask.objectId
           }
         },
         success: (res) => {
-          context.dispatch(actionTypes.getAllWorkInfo)
+          context.commit(mutationTypes.updateTask, {index, task: {...curTask, lastStatus: res.status}})
         }
       }, context)
     },
@@ -96,7 +102,7 @@ export default {
           }
         },
         success: () => {
-          context.dispatch(actionTypes.getAllWorkInfo)
+          context.dispatch(actionTypes.getAllTask, workId)
         }
       }, context)
     },

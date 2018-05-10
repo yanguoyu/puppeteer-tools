@@ -10,5 +10,6 @@ export default {
   // newWork
   getUrlPage: 'getUrlPage',
   shotUrl: 'shotUrl',
-  getAllTask: 'getAllTask'
+  getAllTask: 'getAllTask',
+  updateTask: 'updateTask'
 }

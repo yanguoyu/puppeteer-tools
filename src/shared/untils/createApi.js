@@ -7,7 +7,7 @@ export function createAxois (httpMethod) {
     const config = {
       method: httpMethod,
       ...params.config,
-      baseURL: 'http://127.0.0.1:7001/'
+      baseURL: process.env.HOST_APT
     }
     context && context.commit(mutationTypes.addLoading)
     context && context.commit(mutationTypes.clearError)

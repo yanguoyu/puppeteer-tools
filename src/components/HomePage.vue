@@ -51,6 +51,46 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <el-form-item label="启动数据库" prop="useSql">
+          <el-switch v-model="newWork.useSql"/>
+        </el-form-item>
+        <el-row v-if="newWork.useSql">
+          <el-col :span="10">
+            <el-form-item label="数据库配置" prop="dbInfo.host" :rules="[
+                  { required: true , message: '请输入host'}
+              ]">
+              <el-input v-model="newWork.dbInfo.host" placeholder="请输入host" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="5" :offset="1">
+            <el-form-item prop="dbInfo.port" label-width='0px' :rules="[
+                  { required: true , message: '请输入port'}
+              ]">
+              <el-input v-model="newWork.dbInfo.port" placeholder="请输入port" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="5" :offset="1">
+            <el-form-item prop="dbInfo.database" label-width='0px' :rules="[
+                  { required: true , message: '请输入database'}
+              ]">
+              <el-input v-model="newWork.dbInfo.database" placeholder="请输入database" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item prop="dbInfo.user" :rules="[
+                  { required: true , message: '请输入用户名'}
+              ]">
+              <el-input v-model="newWork.dbInfo.user" placeholder="请输入用户名" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="10" :offset="1">
+            <el-form-item prop="dbInfo.password" label-width='0px' :rules="[
+                  { required: true , message: '请输入密码'}
+              ]">
+              <el-input type="password" v-model="newWork.dbInfo.password" placeholder="请输入密码" />
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item :rules="[
               { min: 0, max: 30, message: '描述不能超过30个字符'}
           ]"
@@ -81,11 +121,14 @@ export default {
       e.preventDefault()
       this.$refs.newWorkForm.validate((valid) => {
         if (valid) {
-          this[actionTypes.saveWork](this.newWork)
+          this[actionTypes.saveWork](JSON.parse(JSON.stringify(this.newWork)))
           this.dialogVisible = false
           this.newWork = {
             cycleTime: 1,
-            cycleTimeType: 'Hour'
+            cycleTimeType: 'Hour',
+            useSql: false,
+            dbInfo: {
+            }
           }
           this.$refs.newWorkForm.resetFields()
         } else {
@@ -112,7 +155,10 @@ export default {
         url: null,
         desc: null,
         cycleTime: 1,
-        cycleTimeType: 'Hour'
+        cycleTimeType: 'Hour',
+        useSql: false,
+        dbInfo: {
+        }
       }
     }
   },

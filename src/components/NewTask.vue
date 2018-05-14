@@ -95,7 +95,7 @@ export default {
     saveTaskInfo: function () {
       this.$refs.taskInfo.validate((valid) => {
         if (valid) {
-          this[actionTypes.saveTask]({taskInfo: this.taskInfo, workId: this.workId})
+          this[actionTypes.saveTask]({taskInfo: JSON.parse(JSON.stringify(this.taskInfo)), workId: this.workId})
           this.closeDialog()
         } else {
           console.log('error submit!!')

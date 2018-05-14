@@ -50,6 +50,9 @@ export default {
         },
         success: (res) => {
           context.commit(mutationTypes.updateTask, {index, task: {...curTask, lastStatus: res.status}})
+        },
+        failed: (res) => {
+          context.commit(mutationTypes.updateTask, {index, task: {...curTask, lastStatus: false}})
         }
       }, context)
     },

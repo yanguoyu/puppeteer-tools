@@ -18,17 +18,24 @@
       <el-input :value="value.sameSelectIndex" placeholder="请输入选择元素索引" v-on:input="changeValues($event,'sameSelectIndex')"/>
     </el-col>
     <el-col :span="24" class="splider"/>
-    <el-col :span="10">
+    <el-col :span="8">
       <el-switch active-text='获取内容' inactive-text= '对比测试'
         :value="value.onlyGet" v-on:input="changeValues($event,'onlyGet')"/>
     </el-col>
-    <el-col :span="24" class="splider"/>
-    <el-col :span="9" v-if="!value.onlyGet">
+    <el-col :span="9" v-if="!value.onlyGet" :offset="1">
       使用第一次执行结果比较
       <el-switch :value="value.useFirst" v-on:input="changeValues($event,'useFirst')"/>
     </el-col>
+    <el-col :span="6" v-if="!value.onlyGet && !value.useFirst">
+      是否使用SQL
+      <el-switch :value="value.useSql" v-on:input="changeValues($event,'useSql')"/>
+    </el-col>
+    <el-col :span="24" class="splider"/>
     <el-col :span="8" v-if="!value.onlyGet && !value.useFirst">
-      <el-input :value="value.value" placeholder="输入期望值" v-on:input="changeValues($event,'value')"/>
+      <el-input :value="value.value" :placeholder="value.useSql?'输入sql语句':'输入期望值'" v-on:input="changeValues($event,'value')"/>
+    </el-col>
+    <el-col :span="8" v-if="!value.onlyGet && !value.useFirst && value.useSql" :offset="1">
+      <el-input :value="value.sqlGetIndex" placeholder="sql数据获取" v-on:input="changeValues($event,'sqlGetIndex')"/>
     </el-col>
   </el-row>
 </template>
@@ -37,14 +44,9 @@
 export default {
   methods: {
     changeValues: function (value, name) {
+      const preValue = JSON.parse(JSON.stringify(this.value))
       const newValue = {
-        select: this.value.select,
-        sameSelectIndex: this.value.sameSelectIndex,
-        opType: this.value.opType,
-        name: this.value.name,
-        value: this.value.value,
-        useFirst: this.value.useFirst,
-        onlyGet: this.value.onlyGet,
+        ...preValue,
         [name]: value
       }
       this.$emit('input', newValue)
@@ -58,7 +60,9 @@ export default {
       name: String,
       value: String,
       select: String,
-      sameSelectIndex: Number
+      sameSelectIndex: Number,
+      useSql: Boolean,
+      sqlGetIndex: String
     }
   }
 }

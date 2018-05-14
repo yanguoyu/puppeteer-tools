@@ -31,11 +31,8 @@ export default {
         config: {
           url: '/saveWork',
           data: {
-            name: workInfo.name,
-            url: workInfo.url,
-            desc: workInfo.desc,
-            cycleTime: workInfo.cycleTime,
-            cycleTimeType: workInfo.cycleTimeType
+            ...workInfo,
+            dbInfo: workInfo.useSql ? workInfo.dbInfo : null
           }
         },
         success: () => {

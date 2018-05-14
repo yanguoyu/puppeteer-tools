@@ -19,7 +19,11 @@ export function createAxois (httpMethod) {
           return
         }
         context && context.commit(mutationTypes.subLoading)
-        params.success && params.success(res.data.result)
+        if (res.data.code === 20000) {
+          params.success && params.success(res.data.result)
+        } else {
+          params.failed && params.failed(res.error)
+        }
       })
       .catch(err => {
         context && context.commit(mutationTypes.hasError)

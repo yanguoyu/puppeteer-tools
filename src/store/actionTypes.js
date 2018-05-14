@@ -10,6 +10,8 @@ export default {
   getUserInfo: 'getUserInfo',
   getAllWorkInfo: 'getAllWorkInfo',
   logOut: 'logOut',
+  hasLogin: 'hasLogin',
+  loginByGithub: 'loginByGithub',
   // op
   saveOperator: 'saveOperator'
 }

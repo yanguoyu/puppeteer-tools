@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Login from '@/components/Login'
 import MenuTitle from '@/components/MenuTitle'
 import HomePage from '@/components/HomePage'
 import WorkDetail from '@/components/WorkDetail'
@@ -14,7 +15,7 @@ export default new Router({
       component: MenuTitle,
       children: [
         {
-          path: 'allWork',
+          path: '',
           name: 'HomePage',
           component: HomePage
         },
@@ -24,6 +25,11 @@ export default new Router({
           component: WorkDetail
         }
       ]
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
     }
   ]
 })

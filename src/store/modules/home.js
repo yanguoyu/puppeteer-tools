@@ -50,13 +50,28 @@ export default {
         }
       }, context)
     },
+    [actionTypes.loginByGithub] (context) {
+      window.location.href = `${process.env.HOST_APT}login/loginIn`
+    },
+    [actionTypes.hasLogin] (context) {
+      untils.createApi.get({
+        config: {
+          url: '/login/hasLogin'
+        },
+        success: (res) => {
+          if (res) {
+            window.location.href = '#/'
+          }
+        }
+      })
+    },
     [actionTypes.logOut] (context) {
       untils.createApi.get({
         config: {
           url: '/logOut'
         },
         success: () => {
-          context.commit(mutationTypes.getUserInfo, {})
+          window.location.href = '#/login'
         }
       }, context)
     }

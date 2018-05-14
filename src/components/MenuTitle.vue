@@ -3,7 +3,7 @@
     <el-menu
       mode="horizontal">
       <el-menu-item index="1">
-        <a href="#/allWork">首页</a>
+        <a href="#/">首页</a>
       </el-menu-item>
       <el-submenu index="2">
         <template slot="title">工程</template>

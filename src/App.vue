@@ -18,4 +18,9 @@ export default {
 #app a {
   text-decoration: none;
 }
+
+html, body, #app{
+  height: 100%;
+}
+
 </style>

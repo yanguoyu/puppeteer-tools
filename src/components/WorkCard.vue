@@ -1,5 +1,6 @@
 <template>
-  <router-link class="linkto" :to="`workDetail/${workInfo.objectId}`">
+  <router-link class="linkto" @click.native="clickWork"
+    :to="`workDetail/${workInfo.objectId}`">
     <el-card shadow="hover">
       <div slot="header">
         <span>{{workInfo.name}}</span>
@@ -15,12 +16,19 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+import mutationTypes from '../store/mutationTypes'
+
 export default {
   name: 'WorkCard',
   methods: {
-    scanWorkDetail: function () {
-      window.location.href = `workDetail/${this.workInfo.objectId}`
-    }
+    clickWork: function () {
+      this[mutationTypes.changeActiveIndex]({
+        curIndex: `/workDetail/${this.workInfo.objectId}`,
+        curWorkName: this.workInfo.name
+      })
+    },
+    ...mapMutations([mutationTypes.changeActiveIndex])
   },
   props: {
     workInfo: {

@@ -5,7 +5,9 @@ import actionTypes from '../actionTypes'
 export default {
   state: {
     userInfo: {},
-    allWorkInfo: []
+    allWorkInfo: [],
+    activeIndex: '1',
+    activeName: null
   },
   mutations: {
     [mutationTypes.getUserInfo] (state, userInfo) {
@@ -13,6 +15,11 @@ export default {
     },
     [mutationTypes.getAllWorkInfo] (state, allWorkInfo) {
       state.allWorkInfo = allWorkInfo
+    },
+    [mutationTypes.changeActiveIndex] (state, { curIndex, curWorkName }) {
+      console.log(curIndex)
+      state.activeIndex = curIndex
+      state.activeName = curWorkName
     }
   },
   actions: {

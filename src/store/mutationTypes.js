@@ -7,6 +7,7 @@ export default {
   // home
   getUserInfo: 'getUserInfo',
   getAllWorkInfo: 'getAllWorkInfo',
+  changeActiveIndex: 'changeActiveIndex',
   // newWork
   getUrlPage: 'getUrlPage',
   shotUrl: 'shotUrl',

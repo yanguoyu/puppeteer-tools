@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="title-main">
     <el-menu
       mode="horizontal">
       <el-menu-item index="1">
@@ -43,8 +43,8 @@ export default {
 }
 </script>
 
-<style scoped>
-.userInfo {
+<style>
+.title-main .userInfo {
   float: right;
 }
 </style>

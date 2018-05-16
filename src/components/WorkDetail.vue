@@ -47,7 +47,7 @@
             <el-table-column prop="updatedAt" label="执行时间" :formatter="formatTime"/>
             <el-table-column prop="status" label="状态">
               <template slot-scope="scope">
-                <span>{{ scope.row.status===true?'成功': "失败"}}</span>
+                <span>{{ getStatusText(scope.row.status)}}</span>
               </template>
             </el-table-column>
             <el-table-column prop="value" label="执行结果"/>
@@ -140,31 +140,35 @@ export default {
         }
       })
     },
-    tableRowClassName ({row, rowIndex}) {
-      if (row.lastStatus === true) {
+    getStatusClass: function (status) {
+      if (status === 1) {
         return 'success-row'
-      } else if (row.lastStatus === false) {
+      } else if (status === 2) {
         return 'failed-row'
-      } else if (row.lastStatus === 'pending') {
+      } else if (status === 'pending') {
         return 'pending-row'
+      } else if (status === 3) {
+        return 'error-row'
       }
       return 'no-excute-row'
     },
+    tableRowClassName ({row}) {
+      return this.getStatusClass(row.lastStatus)
+    },
     getStatusText (status) {
-      if (status === true) {
+      if (status === 1) {
         return '成功'
-      } else if (status === false) {
+      } else if (status === 2) {
         return '失败'
       } else if (status === 'pending') {
         return '执行中'
+      } else if (status === 3) {
+        return '错误'
       }
       return '未执行'
     },
     tableRowInsClassName ({row}) {
-      if (row.status === true) {
-        return 'success-row'
-      }
-      return 'failed-row'
+      return this.getStatusClass(row.status)
     },
     formatTime (row, column, cellValue) {
       return moment(cellValue).format('YYYY-MM-DD hh:mm:ss')
@@ -202,6 +206,10 @@ export default {
 }
 
 .task-tables .failed-row {
+  color: #E6A23C;
+}
+
+.task-tables .error-row {
   color: #F56C6C;
 }
 
